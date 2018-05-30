@@ -52,12 +52,14 @@ public class MySQLTableCreation {
 					+ "url VARCHAR(255),"
 					+ "distance FLOAT,"
 					+ "PRIMARY KEY (item_id))";
+			// we do not create the categories field  'categories VARCHAR(255)'
+			//because each item may have multiple item and it is not easy to find the item through categories 
 			stmt.executeUpdate(sql);
 			
 			sql = "CREATE TABLE categories ("
 					+ "item_id VARCHAR(255) NOT NULL,"  //combine primary key
 					+ "category VARCHAR(255) NOT NULL,"
-					+ "PRIMARY KEY (item_id, category),"
+					+ "PRIMARY KEY (item_id, category),"    //deal with M:N relationships
 					+ "FOREIGN KEY (item_id) REFERENCES items(item_id))";
 			stmt.executeUpdate(sql);
 
@@ -78,10 +80,7 @@ public class MySQLTableCreation {
 					+ "FOREIGN KEY (user_id) REFERENCES users(user_id))";
 			stmt.executeUpdate(sql);			
 			
-			sql = "INSERT INTO users VALUES ("
-					+ "'1111', '3229c1097c00d497a0fd282d586be050', 'John', 'Smith')";
-			System.out.println("Executing query: " + sql);
-			stmt.executeUpdate(sql);
+			
 
 			System.out.println("Import is done successfully.");
 		} catch (Exception e) {
